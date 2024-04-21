@@ -7,10 +7,8 @@ pd.set_option('display.max_columns', None)
 pd.set_option('display.width', None)
 pd.set_option('display.max_colwidth', None)
 
+#Loads the EDGAR index files for the specified year and returns a dataframe.
 def load_data(year, source_dir):
-    """
-    Loads the EDGAR index files for the specified year and returns a dataframe.
-    """
     colspecs = [(0, 62), (62, 74), (74, 86), (86, 98), (98, None)]
     column_names = ['Company Name', 'Form Type', 'CIK', 'Date Filed', 'Filename']
     dataframe_collection = []
@@ -37,11 +35,9 @@ def load_data(year, source_dir):
     all_data_df = pd.concat(dataframe_collection, ignore_index=True)
     all_data_df.columns = all_data_df.columns.str.strip()
     return all_data_df
-
+ 
+#Filters the dataframe for companies matching the search term or a CIK.
 def find_companies_or_cik(all_data_df, search_term, search_type):
-    """
-    Filters the dataframe for companies matching the search term or a CIK.
-    """
     try:
         if search_type == 'name':
             matching = all_data_df[all_data_df['Company Name'].str.contains(search_term, case=False, na=False)]
@@ -52,10 +48,8 @@ def find_companies_or_cik(all_data_df, search_term, search_type):
         print(f"An error occurred during search: {e}")
         return pd.DataFrame()
 
+#Returns all filings for a specific CIK and year, with reset index.
 def get_filings_for_company(all_data_df, cik, year):
-    """
-    Returns all filings for a specific CIK and year, with reset index.
-    """
     try:
         filings_df = all_data_df[
             (all_data_df['CIK'] == cik) &
@@ -65,11 +59,9 @@ def get_filings_for_company(all_data_df, cik, year):
     except Exception as e:
         print(f"An error occurred while fetching filings for company CIK {cik}: {e}")
         return pd.DataFrame()
-
+        
+#Displays filings and prompts user to choose one to view the URL.
 def display_and_choose_filings(filings_df):
-    """
-    Displays filings and prompts user to choose one to view the URL.
-    """
     try:
         if filings_df.empty:
             print("No filings found for this company.")
