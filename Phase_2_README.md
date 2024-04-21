@@ -1,5 +1,5 @@
 # Phase 2:
-Additional to the pahse 1, we can do more on project with the use of data visualization and statistical analysis 
+Additional to the pahse 1, we can do more on project with the use of *data visualization* and *statistical analysis.*
 We can try to answer through visualizations and basis statistical analysis:
 Time series counts of filings per year/quarter/month.
 Is there a seasonality? For instance, are there more filings in a particular month?
