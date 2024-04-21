@@ -7,8 +7,8 @@ pd.set_option('display.max_columns', None)  # Display all columns
 pd.set_option('display.width', None)  # Automatically adjust display width to terminal size
 pd.set_option('display.max_colwidth', None)  # Display full content of each cell
 
+#Load data from all EDGAR index files in the specified director
 def load_data_from_directory(source_dir):
-    """Load data from all EDGAR index files in the specified directory."""
     colspecs = [(0, 62), (62, 74), (74, 86), (86, 98), (98, None)]
     column_names = ['Company Name', 'Form Type', 'CIK', 'Date Filed', 'Filename']
     dataframe_collection = []
@@ -47,7 +47,7 @@ def save_to_csv(df, output_path):
 
 # Main execution logic
 if __name__ == "__main__":
-    source_directory = input('Enter the path to your data directory: ')  # Get directory containing the data files from user
+    source_directory = input('Enter/path/to/data/directory: ')  # Get directory containing the data files from user
     csv_name = input('Enter the filename for the CSV (e.g., combined_data.csv): ')
     output_path = os.path.join(source_directory, csv_name)  # Construct the full path to save the CSV file
 
