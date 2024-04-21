@@ -1,3 +1,4 @@
+# Phase 1:
 EDGAR Indices project
 This project entails writing Python code that efficiently processes EDGAR index files to construct a data frame, enabling users to perform basic searches and analysis.
 It has two main purposes:
