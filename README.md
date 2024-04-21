@@ -3,7 +3,7 @@ This project entails writing Python code that efficiently processes EDGAR index 
 It has two main purposes:
   Produce Python code that addresses a specific institutional need.
   Learn about an important financial data repository and its contents as well as access.
-Here with this individual can:
+Here with this, individual can:
   Learn about EDGAR index files, their structure and content.
   Download index files (daily, quarterly) directly from the SEC's EDGAR site (https://www.sec.gov/os/accessing-edgar-data). 
   For this project, we excluded the XBRL filings.
