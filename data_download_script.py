@@ -18,6 +18,10 @@ start_year = int(input("Enter the start year (YYYY): "))
 end_year = int(input("Enter the end year (YYYY): "))
 save_dir = input('Please Input Path to Your Directory to Download Files:')
 
+#checking for the existence of the directory, if not, then will create new one with the name
+if not os.path.exists(save_dir):
+    os.makedirs(save_dir, exist_ok=True)
+
 # Add your user-agent string here
 headers = {'User-Agent': 'addyour@email.com'}
 
