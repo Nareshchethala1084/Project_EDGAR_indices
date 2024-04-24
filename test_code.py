@@ -1,5 +1,6 @@
 import pandas as pd  # Importing pandas for data manipulation
 import os  # Importing os for file and directory operations
+from fuzzywuzzy import process
 
 # Adjusting pandas display options for more optimized data viewing
 pd.set_option('display.max_rows', None)  # Display all rows
@@ -45,19 +46,23 @@ def load_data(year, source_dir):
 
 # Function to filter the DataFrame by company name or CIK
 def find_companies_or_cik(all_data_df, search_term, search_type):
+    """
+    Filters the dataframe for companies matching the search term or a CIK using fuzzy search for company names.
+    """
     try:
         if search_type == 'name':
-            # Filter DataFrame by company name, ignoring case
-            matching = all_data_df[all_data_df['Company Name'].str.contains(search_term, case=False, na=False)]
+            # Extract matches with a score of 80 or more (scale 0-100, where 100 is a perfect match)
+            choices = all_data_df['Company Name'].unique()
+            matches = process.extract(search_term, choices, limit=10, scorer=fuzzywuzzy.fuzz.token_sort_ratio)
+            matched_names = [match[0] for match in matches if match[1] >= 80]  # Filter by score
+            matching = all_data_df[all_data_df['Company Name'].isin(matched_names)]
         else:  # search by 'cik'
-            # Filter DataFrame by CIK
             matching = all_data_df[all_data_df['CIK'].astype(str) == str(search_term)]
-        # Return filtered DataFrame with duplicate entries removed
         return matching[['Company Name', 'CIK']].drop_duplicates().reset_index(drop=True)
     except Exception as e:
-        # Handle any errors that occur during filtering
         print(f"An error occurred during search: {e}")
-        return pd.DataFrame()  # Return an empty DataFrame if an error occurs
+        return pd.DataFrame()
+
 
 # Function to get all filings for a specific CIK in a given year
 def get_filings_for_company(all_data_df, cik, year):
